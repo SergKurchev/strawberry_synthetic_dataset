@@ -1,0 +1,32 @@
+# Requirements for local testing (CPU mode)
+# Install with: pip install -r requirements_local.txt
+
+# Core dependencies
+numpy>=1.21.0
+pandas>=1.3.0
+matplotlib>=3.4.0
+seaborn>=0.11.0
+pillow>=8.3.0
+opencv-python>=4.5.0
+tqdm>=4.62.0
+scikit-learn>=0.24.0
+
+# Deep Learning (CPU versions)
+torch>=2.0.0
+torchvision>=0.15.0
+timm>=0.9.0
+einops>=0.6.0
+
+# YOLO
+ultralytics>=8.0.0
+
+# Data augmentation
+albumentations>=1.3.0
+
+# Utilities
+huggingface-hub>=0.16.0
+
+# For depth models (optional, may fail on CPU)
+# xformers  # Skip on CPU
+# Note: Depth Anything 3 and UniDepthV2 may not work well on CPU
+# These notebooks are primarily designed for Kaggle GPU environment
