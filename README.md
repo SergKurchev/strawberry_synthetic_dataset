@@ -40,50 +40,36 @@ For a comprehensive overview, check the **Kaggle Notebook**: [Scripts/kaggle_dat
 
 ## Quick Start (Loading the Dataset)
 
-Use the following Python snippet to unzip and load the dataset annotations.
+The dataset is hosted on GitHub Releases in multiple parts. Use the following simple script to download and extract it.
 
 ```python
+import requests
 import zipfile
-import json
-import numpy as np
-from pathlib import Path
-from PIL import Image
+import os
 
-# 1. Unzip the dataset
-# Note: Ensure you have combined the split files first if downloaded from Releases.
-zip_path = Path("strawberry_dataset.zip")
-extract_path = Path("dataset")
+# 1. Download & Combine
+VERSION_TAG = "Dataset"
+BASE_URL = f"https://github.com/SergKurchev/strawberry_synthetic_dataset/releases/download/{VERSION_TAG}"
+FILES_TO_DOWNLOAD = ["strawberry_dataset.zip.001", "strawberry_dataset.zip.002", "strawberry_dataset.zip.003"]
+OUTPUT_ZIP = "strawberry_dataset.zip"
 
-if zip_path.exists() and not extract_path.exists():
-    print("Extracting dataset...")
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(extract_path)
-    print("Extraction complete.")
+print("⬇️ Downloading & Combining...")
+with open(OUTPUT_ZIP, "wb") as out_file:
+    for filename in FILES_TO_DOWNLOAD:
+        print(f"  Fetching {filename}...")
+        r = requests.get(f"{BASE_URL}/{filename}")
+        for chunk in r.iter_content(chunk_size=8192):
+            out_file.write(chunk)
 
-# 2. Load Annotations
-dataset_path = extract_path / "strawberry_dataset" # Adjust based on zip structure
-if not dataset_path.exists(): dataset_path = extract_path # Fallback
+# 2. Extract
+print("📂 Extracting...")
+with zipfile.ZipFile(OUTPUT_ZIP, "r") as zip_ref:
+    zip_ref.extractall(".")
 
-with open(dataset_path / "annotations.json", "r") as f:
-    data = json.load(f)
+# (Optional) If on Linux/Kaggle, run the fix_windows_filenames() snippet 
+# found in the notebooks to handle potential path issues.
 
-print(f"Loaded {len(data['images'])} images and {len(data['annotations'])} annotations.")
-
-# 3. Load an Image and Depth Map
-img_info = data['images'][0]
-img_path = dataset_path / "images" / img_info['file_name']
-depth_path = dataset_path / "depth" / img_info['file_name']
-
-# Load RGB
-image = Image.open(img_path).convert("RGB")
-
-# Load Depth (16-bit PNG decoding)
-depth_img = np.array(Image.open(depth_path))
-# Combine high and low bytes: depth_mm = (R << 8) | G
-depth_mm = (depth_img[:,:,0].astype(np.uint16) << 8) | depth_img[:,:,1].astype(np.uint16)
-depth_m = depth_mm.astype(np.float32) / 1000.0
-
-print(f"Image size: {image.size}, Max depth: {depth_m.max():.2f}m")
+print("✅ Dataset Ready!")
 ```
 
 ## Dataset Structure
