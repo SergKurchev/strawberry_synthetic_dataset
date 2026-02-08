@@ -14,7 +14,15 @@ This tool generates photorealistic synthetic scenes of strawberry bushes in gree
 
 4. **Depth Estimation**: High-precision depth maps and camera intrinsics.
 
-The dataset is included in this repository as **[strawberry_dataset.zip](strawberry_dataset.zip)**.
+### 📥 Downloading the Dataset
+
+The dataset is ~4.4GB and has been split into multiple parts (`strawberry_dataset.zip.001`, `strawberry_dataset.zip.002`...) due to file size limits.
+
+1.  Go to the **[Releases](https://github.com/SergKurchev/strawberry_synthetic_dataset/releases)** section.
+2.  Download all parts.
+3.  Combine/Extract them:
+    *   **7-Zip (Windows)**: Right-click `.001` file -> "7-Zip" -> "Extract Here".
+    *   **Cat (Linux/Mac)**: `cat strawberry_dataset.zip.* > strawberry_dataset.zip` then unzip.
 
 ## Visualizations
 
@@ -42,6 +50,7 @@ from pathlib import Path
 from PIL import Image
 
 # 1. Unzip the dataset
+# Note: Ensure you have combined the split files first if downloaded from Releases.
 zip_path = Path("strawberry_dataset.zip")
 extract_path = Path("dataset")
 
@@ -81,7 +90,7 @@ print(f"Image size: {image.size}, Max depth: {depth_m.max():.2f}m")
 
 Annotated data is organized as follows:
 
-```
+```text
 strawberry_dataset/
 ├── images/                    # RGB images (1024x1024 PNG)
 ├── labels/                    # YOLO segmentation labels (.txt)
