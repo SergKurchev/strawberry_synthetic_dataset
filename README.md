@@ -14,7 +14,7 @@ This tool generates photorealistic synthetic scenes of strawberry bushes in gree
 
 4. **Depth Estimation**: High-precision depth maps and camera intrinsics.
 
-The dataset is available for download in the **[Releases](https://github.com/SergKurchev/strawberry_synthetic_dataset/releases)** section of this repository.
+The dataset is included in this repository as **[strawberry_dataset.zip](strawberry_dataset.zip)**.
 
 ## Visualizations
 
