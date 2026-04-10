@@ -7,6 +7,8 @@ fix_json_brackets.py
 fix_json_brackets.py
 *.zip
 *.zip.*
+multiview_dataset
+
 # !strawberry_dataset.zip # Too large for GitHub (4GB+), ignore it.
 
 # --- External Dependencies ---
