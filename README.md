@@ -98,14 +98,22 @@ strawberry_dataset/
 
 ## Using the Generator in Unity
 
-To generate your own data:
+To generate your own data, open the project in **Unity 2021.3+** (URP) and navigate to the menu: `Tools > Strawberry Dataset Generator`.
 
-1.  Open the project in **Unity 2021.3+** (URP).
-2.  Navigate to the menu: `Tools > Strawberry Dataset Generator`.
-3.  In the control panel:
-    *   Set **Output Path**.
-    *   Set **Total Samples** (e.g., 1000).
-    *   Set **Samples Per Scene** (e.g., 50).
-4.  Click **Generate Full Dataset**.
+The generator currently supports two completely independent generation pipelines:
 
-The system will automatically randomize bush placement, camera angles, lighting, and greenhouse dimensions to create diverse training data.
+### 1. Old Pipeline (Greenhouse Rows)
+Generates large-scale datasets with multiple rows of strawberries in a randomized greenhouse environment.
+1. Select the **Old Pipeline** tab.
+2. In the control panel, set **Total Samples** (e.g., 1000) and **Samples Per Scene** (e.g., 50).
+3. Click **Generate Full Dataset**.
+*Outputs: YOLO, COCO, RGB, Depth (PNG/NPY), Instance Masks.*
+
+### 2. Multi-View Samples (3D Point Cloud Generation)
+Generates samples of a single strawberry bush placed in a controlled white room environment (1m cube). Each sample captures multiple frames (default 20) from random camera angles surrounding the bush.
+1. Select the **Multi-View Samples** tab.
+2. Assign the **Multi-View Sample Config** asset.
+3. Configure the settings (default frames per sample is 20).
+4. Click **Setup Scene** to preview the white room + bush.
+5. Click **Generate All Samples**. A python post-processing script will run automatically.
+*Outputs per sample: 20x YOLO, COCO, RGB, Depth, Masks, plus **a merged 3D Point Cloud (.ply)** and an **Interactive HTML 3D Viewer**.*

@@ -17,7 +17,13 @@ namespace StrawberryDataset
             public float fy;
             public float cx;
             public float cy;
+            public int   width;
+            public int   height;
+            public float near;    // near clip plane in metres
+            public float far;     // far  clip plane in metres
+            public float fov_deg; // vertical field-of-view in degrees
         }
+
         
         [System.Serializable]
         public class CameraExtrinsics
@@ -203,18 +209,25 @@ namespace StrawberryDataset
         /// </summary>
         private CameraIntrinsics ExtractIntrinsics(int width, int height)
         {
-            float fov = targetCamera.fieldOfView * Mathf.Deg2Rad;
-            float fy = (height / 2f) / Mathf.Tan(fov / 2f);
-            float fx = fy; // Assuming square pixels
-            
+            float fovDeg = targetCamera.fieldOfView;          // vertical FOV degrees
+            float fovRad = fovDeg * Mathf.Deg2Rad;
+            float fy = (height / 2f) / Mathf.Tan(fovRad / 2f);
+            float fx = fy; // Unity uses square pixels (aspect handled by horizontal FOV)
+
             return new CameraIntrinsics
             {
-                fx = fx,
-                fy = fy,
-                cx = width / 2f,
-                cy = height / 2f
+                fx      = fx,
+                fy      = fy,
+                cx      = width  / 2f,
+                cy      = height / 2f,
+                width   = width,
+                height  = height,
+                near    = targetCamera.nearClipPlane,
+                far     = targetCamera.farClipPlane,
+                fov_deg = fovDeg,
             };
         }
+
         
         /// <summary>
         /// Extract camera extrinsic parameters

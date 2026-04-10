@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1e646e17bfe27a4598b9b0aa9197b1c, type: 3}
+  m_Name: MultiViewSampleConfig
+  m_EditorClassIdentifier: Assembly-CSharp::StrawberryDataset.MultiViewSampleConfig
+  strawberryBushPrefab: {fileID: 0}
+  roomSideLength: 1
+  cameraFOV: 60
+  minCameraDistance: 0.3
+  maxCameraDistance: 1.5
+  bboxShrinkFactor: 0.1
+  framesPerSample: 20
+  totalSamples: 10
+  imageWidth: 1024
+  imageHeight: 1024
+  outputFolder: multiview_dataset
+  minPixelCount: 15
+  autoPostProcess: 1
+  pythonExecutable: python
